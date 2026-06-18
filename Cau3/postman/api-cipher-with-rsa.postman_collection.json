@@ -1,0 +1,822 @@
+{
+  "info": {
+    "_postman_id": "7b4db3c0-54a4-4f6c-b0cf-0d7b77f72e02",
+    "name": "API Cipher",
+    "description": "Postman collection for Lab 02 cipher APIs. Run lab_02/ex01_API/api.py, then call encrypt, decrypt, and details/matrix endpoints.\n\nUpdated: Added RSA API requests: generate_keys, encrypt, decrypt, sign, verify.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Caesar",
+      "item": [
+        {
+          "name": "Encrypt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"caesar_cipher_text\", jsonData.encrypted_text || jsonData.result);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/caesar/encrypt"
+          }
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encrypted_text\": \"{{caesar_cipher_text}}\",\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/caesar/decrypt"
+          }
+        },
+        {
+          "name": "Details / Matrix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/caesar/details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Vigenere",
+      "item": [
+        {
+          "name": "Encrypt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"vigenere_cipher_text\", jsonData.encrypted_text || jsonData.result);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/vigenere/encrypt"
+          }
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encrypted_text\": \"{{vigenere_cipher_text}}\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/vigenere/decrypt"
+          }
+        },
+        {
+          "name": "Details / Matrix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/vigenere/details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Playfair",
+      "item": [
+        {
+          "name": "Encrypt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"playfair_cipher_text\", jsonData.encrypted_text || jsonData.result);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"HELLO\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/playfair/encrypt"
+          }
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encrypted_text\": \"{{playfair_cipher_text}}\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/playfair/decrypt"
+          }
+        },
+        {
+          "name": "Details / Matrix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"HELLO\",\n  \"key\": \"KEY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/playfair/details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rail Fence",
+      "item": [
+        {
+          "name": "Encrypt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"railfence_cipher_text\", jsonData.encrypted_text || jsonData.result);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/railfence/encrypt"
+          }
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encrypted_text\": \"{{railfence_cipher_text}}\",\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/railfence/decrypt"
+          }
+        },
+        {
+          "name": "Details / Matrix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"3\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/railfence/details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transposition",
+      "item": [
+        {
+          "name": "Encrypt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"transposition_cipher_text\", jsonData.encrypted_text || jsonData.result);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"ZEBRAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/transposition/encrypt"
+          }
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"encrypted_text\": \"{{transposition_cipher_text}}\",\n  \"key\": \"ZEBRAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/transposition/decrypt"
+          }
+        },
+        {
+          "name": "Details / Matrix",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plain_text\": \"Hello World\",\n  \"key\": \"ZEBRAS\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/transposition/details"
+          }
+        }
+      ]
+    },
+    {
+      "name": "RSA",
+      "item": [
+        {
+          "name": "Generate Keys",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/rsa/generate_keys"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Encrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/rsa/encrypt",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUTECH University\",\n  \"key_type\": \"public\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"rsa_ciphertext\", jsonData.encrypted_message);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/rsa/decrypt",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ciphertext\": \"{{rsa_ciphertext}}\",\n  \"key_type\": \"private\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/rsa/sign",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUTECH University\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"rsa_signature\", jsonData.signature);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/rsa/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUTECH University\",\n  \"signature\": \"{{rsa_signature}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ECC",
+      "item": [
+        {
+          "name": "Generate Keys",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/ecc/generate_keys"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Encrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/ecc/encrypt",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUtech\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"ecc_ciphertext\", jsonData.encrypted_message);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Decrypt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/ecc/decrypt",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ciphertext\": \"{{ecc_ciphertext}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Sign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/ecc/sign",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUtech\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "pm.collectionVariables.set(\"ecc_signature\", jsonData.signature);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/ecc/verify",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"HUtech\",\n  \"signature\": \"{{ecc_signature}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000/api"
+    },
+    {
+      "key": "caesar_cipher_text",
+      "value": "Khoor Zruog"
+    },
+    {
+      "key": "vigenere_cipher_text",
+      "value": "Rijvs Uyvjn"
+    },
+    {
+      "key": "playfair_cipher_text",
+      "value": "DBNVMI"
+    },
+    {
+      "key": "railfence_cipher_text",
+      "value": "Horel ollWd"
+    },
+    {
+      "key": "transposition_cipher_text",
+      "value": "odlreoll XHW"
+    },
+    {
+      "key": "rsa_ciphertext",
+      "value": ""
+    },
+    {
+      "key": "rsa_signature",
+      "value": ""
+    },
+    {
+      "key": "ecc_ciphertext",
+      "value": ""
+    },
+    {
+      "key": "ecc_signature",
+      "value": ""
+    }
+  ]
+}
